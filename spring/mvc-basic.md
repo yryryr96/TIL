@@ -96,7 +96,7 @@ HTTP 요청의 메시지 바디에 들어있는 데이터를 처리할 때 사�
 
 
 
-**요청의 경우** @RequestBody, HttpEntity를 처리하는 ArgumentResolver가 각각 있다. (RequestResponseBodyMethodProcessor, HttyEntityMethodProcessor) 이  ArgumentResolver들이 HttpMessageConverter를 사용해서 필요한 객체를 생성한다.
+**요청의 경우** @RequestBody, HttpEntity를 처리하는 ArgumentResolver가 각각 있다. (RequestResponseBodyMethodProcessor, HttpEntityMethodProcessor) 이  ArgumentResolver들이 HttpMessageConverter를 사용해서 필요한 객체를 생성한다.
 
 
 
