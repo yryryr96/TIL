@@ -58,7 +58,7 @@ CallService의 external() 메서드를 실행하면 internal() 메서드에서 �
 
 
 
-![image-20240602185158507](..\images\image-20240602185158507.png)
+![image-20240602185158507](../images/image-20240602185158507.png)
 
 1. callService 프록시 호출
 2. `@Transactional` 확인
