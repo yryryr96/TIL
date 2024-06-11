@@ -179,3 +179,90 @@ public class Member {}
 List<Member> findMemberEntityGraph();
 ```
 
+
+
+### Auditing
+
+생성일, 수정일, 생성자, 수정자에 대해 자동으로 값을 넣어주는 기능을 spring-data-jpa에서 제공
+
+
+
+##### @EnableJpaAuditing
+
+애플리케이션 메인 클래스에 적용해야 spring-data-jpa에서 제공하는 auditing 기능을 사용할 수 있다.
+
+```java
+@EnableJpaAuditing
+@SpringBootApplication
+public class DataJpaApplication {
+    public static void main(String[] args) { SpringApplication.run(DataJpaApplication.class, args); }
+}
+```
+
+
+
+##### @EntityListeners, AuditingEntityListener
+
+`Auditing`을 적용할 엔티티 클래스에 `@EntityListeners` 애노테이션을 적용해야한다. 해당 애노테이션은 엔티티의 변화를 감지하여 엔티티와 매핑된 테이블의 데이터를 조작한다.
+
+이 애노테이션의 파라미터에 이벤트 리스너를 넣어줘야하는데, 여기에 `AuditingEntityListener` 클래스를 넣어준다.`org.springframework.data.jpa.domain.support.AuditingEntityListener` spring data jpa에서 제공하는 이벤트 리스너로 영속, 수정 이벤트를 감지하는 역할을 한다.
+
+
+
+##### 애노테이션
+
+- `CreatedDate` : 엔티티가 생성되어 저장될 때 시간을 자동으로 저장
+- `LastModifiedDate` : 조회한 엔티티 값을 변경할 때 시간을 자동으로 저장
+- `CreatedBy` : 생성자
+- `LastModifiedBy` : 수정자
+
+
+
+##### 예시 코드
+
+```java
+// Auditing 클래스 등록
+@MappedSuperclass
+@Getter
+@EventListeners(AuditingEntityListener.class) // 이벤트 리스너 등록
+public class BaseEntity {
+	
+    @CreatedDate
+  	@Column(updatable = false)
+    private LocalDateTime createdDate;
+    
+    @LastModifiedDate
+    private LocalDateTime lastModifiedDate;
+    
+    @CreatedBy
+    @Column(updatable = false)
+    private String createdBy;
+    
+    @LastModifiedBy
+    private String lastModifiedBy;
+}
+
+// 사용
+@Entity
+public class Member extends BaseEntity {}
+```
+
+- Member 클래스에 Auditing을 구현한 BaseEntity 클래스를 상속한다.
+- Member 클래스가 저장되거나 수정될 때 BaseEntity 클래스의 필드들이 자동으로 갱신된다.
+
+
+
+##### @CreatedBy, @LastModifiedBy 동작
+
+생성, 수정 시간 등록은 알겠는데 누가 생성했고 누가 수정했는지에 대한 정보는 어떻게 주입할까?
+
+정답은 `AuditorAware`을 빈으로 등록해서 정보를 주입할 수 있다.
+
+```java
+@Bean
+public AuditorWare<String> auditorProvider() {
+    return () -> Optional.of(UUID.randomUUID().toString());
+}
+```
+
+return 값에 해당하는 정보를 createdBy, LastModifiedBy 에 등록한다. 실제 개발 환경에서는 스프링 시큐리티 컨텍스트 홀더에 저장된 세션 정보를 활용하거나 다양한 방식을 사용한다.
