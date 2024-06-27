@@ -56,3 +56,72 @@ Jar는 클래스와 관련 리소스를 압축한 단순한 파일이다. 필요
 
 - 파일명 중복을 해결할 수 없다.
   - 파일명이 중복된다면 중복된 클래스나, 리소스 중 하나를 포기해야 한다.
+
+
+
+### 실행 가능 Jar
+
+스프링 부트는 기존 `Jar`, `Fat Jar` 의 문제를 해결하기 위해 jar 내부에 jar를 포함할 수 있는 특별한 구조의 jar를 만들고 동시에 만든 jar를 내부 jar를 포함해서 실행할 수 있게 했다. 이것을 `Executable Jar(실행 가능 Jar)`라 한다.
+
+
+
+- jar 내부에 jar를 포함하기 때문에 어떤 라이브러리가 포함되어 있는지 쉽게 확인 가능하다.
+- jar 내부에 jar를 포함하기 때문에 같은 이름 파일이 있어도 모두 인식 가능하다. `a.jar`, `b.jar` 개별 인식
+
+
+
+##### 구조
+
+- `boot-0.0.1-SNAPSHOT.jar`
+  - `META-INF`
+    - `MANIFEST.MF`
+  - `org/springframework/boot/loader`
+    - `JarLauncher.class` : 스프링 부트 `main()` 실행 클래스
+  - `BOOT-INF`
+    - `classes` : 개발한 class 파일과 리소스 파일
+    - `lib` : 외부 라이브러리
+  - `classpath.idx` : 외부 라이브러리 모음
+  - `layers.idx` : 스프링 부트 구조 정보
+
+
+
+##### Jar 실행 정보
+
+`java -jar xxx.jar`를 실행하면 `MANIFEST.MF` 를 찾고 `Main-Class`를 읽어 `main()`메서드를 실행한다.
+
+
+
+##### 스프링 부트가 만든 MANIFEST.MF
+
+```
+Manifest-Version: 1.0
+Main-Class: org.springframework.boot.loader.JarLauncher
+Start-Class: hello.boot.BootApplication
+Spring-Boot-Version: 3.0.2
+Spring-Boot-Classes: BOOT-INF/classes/
+Spring-Boot-Lib: BOOT-INF/lib/
+Spring-Boot-Classpath-Index: BOOT-INF/classpath.idx
+Spring-Boot-Layers-Index: BOOT-INF/layers.idx
+Build-Jdk-Spec: 17
+```
+
+- `Main-Class`
+  - `hello.boot.BootApplication`이 아니라 `JarLauncher`라는 클래스를 실행하고 있다.
+  - `JarLauncher`는 스프링 부트가 빌드시에 넣어준다.
+  - `JarLauncher`는 스프링 부트가 jar 내부에 jar를 읽어 들일 수 있게 하고, 특별한 구조에 맞게 클래스 정보도 읽어들인다. 그 후, `Start-Class`에 지정된 `main()`을 호출한다.
+
+
+
+##### 실행 과정 정리
+
+1. java -jar xxx.jar
+
+2. MANIFEST.MF 인식
+
+3. JarLauncher.main() 실행
+
+   - `BOOT-INF/classes/` 인식
+
+   - `BOOT-INF/lib/` 인식
+
+4. `BootApplication.main()` 실행
