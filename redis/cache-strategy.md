@@ -64,4 +64,3 @@
 ```
 Cache Aside / Write Around 전략은 TTL을 활용해 한계를 어느정도 보완할 수 있다.
 ```
-
