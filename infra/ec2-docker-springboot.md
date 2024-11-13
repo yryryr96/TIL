@@ -76,7 +76,7 @@ ENTRYPOINT ["java","-jar","/app.jar"]
 
 DockerHub키고 명령어 실행
 
-`docker build -t <컨테이너 이미지 이름 .`
+`docker build -t <컨테이너 이미지 이름> .`
 
 
 
