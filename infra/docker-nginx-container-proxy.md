@@ -143,3 +143,88 @@ server1, server2 컨테이너가 docker에 올라가고 nginx 포트포워딩 �
 
 - location 작성 규칙
 - nginx.conf와 default.conf 차이
+
+
+
+##### nginx.conf
+
+nginx의 기본 설정 파일
+
+```nginx
+user  nginx;
+worker_processes  auto;
+
+error_log  /var/log/nginx/error.log notice;
+pid        /var/run/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+    include /etc/nginx/conf.d/*.conf; # 이 경로의 conf 파일을 nginx 설정에 적용
+}
+```
+
+
+
+##### default.conf
+
+`nginx.conf`에서 include 해서 사용하는 설정 파일
+
+즉, 여러 개의 xxx.conf 파일을 생성해서 설정을 개별적으로 관리할 수 있다. -> `nginx.conf`에서 include 해서 설정을 적용
+
+```nginx
+# 백엔드 upstream 설정
+upstream server1-app {
+    server server1:8080;
+}
+
+upstream server2-app {
+    server server2:8080;
+}
+
+server {
+
+    listen 443 ssl;
+    server_name evan523.shop;
+
+    ssl_certificate /etc/letsencrypt/live/evan523.shop/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/evan523.shop/privkey.pem;
+
+    location /server1 {
+        proxy_pass http://server1-app/health;
+    }
+
+    location /server2 {
+        proxy_pass http://server2-app/health;
+    }
+}
+
+server {
+    listen 80;
+    server_name evan523.shop;
+
+    return 301 https://$host$request_uri;
+}
+```
+
+이와 같은 `reverse-proxy` 설정을 `nginx.conf`에 적용
