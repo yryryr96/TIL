@@ -1,8 +1,6 @@
 #### 공유기 (Home Router)
 
-<img src="../images/image-20241125031221067.png" alt="image-20241125031221067" align="left" />
-
-
+<img src="../images/image-20241125031221067.png" alt="image-20241125031221067" align="left" style="zoom:;" />
 
 - 여러 기기들을 인터넷에 연결될 수 있도록 하는 장치
 - 하나의 IP 주소로도 동시에 인터넷을 사용하는 것이 가능
