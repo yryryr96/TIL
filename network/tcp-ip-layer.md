@@ -17,7 +17,7 @@
 
 A 클라이언트가 B 서버에 데이터를 전송하는 과정
 
-![image-20241207195708366](../images\image-20241207195708366.png)
+![image-20241207195708366](../images/image-20241207195708366.png)
 
 
 
@@ -76,7 +76,7 @@ A 클라이언트가 B 서버에 데이터를 전송하는 과정
 
 
 
-#### Internet -> Transport (역캡슐화)
+#### Internet -> Transport -> Application (역캡슐화)
 
 Ip packet에 담겨있는 정보는 `전송 Protocol, 송신 IP, 수신 IP`이고 따로 저장해둔다.
 
