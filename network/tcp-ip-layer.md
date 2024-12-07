@@ -68,10 +68,16 @@ A 클라이언트가 B 서버에 데이터를 전송하는 과정
 ![image-20241207201151749](../images/image-20241207201151749.png)
 
 - Link Layer의 캡슐화 과정에서는 Ip packet에  `Header`와 `Trailer` 추가한다.
+  - `Trailer` (오류 감지, 데이터 무결성 보장)
+    - `CRC (Cyclic Redundancy Check)`
+      1. Frame의 payload를 기반으로 계산된 값이 Trailer에 추가된다.
+      2. 수신 측에서 동일한 방식으로 CRC를 계산하고, 송신측에서 보낸 CRC와 비교하여 데이터 무결성을 확인한다.
+    - `프레임 끝 표시 (End of Frame)`
+      - 프레임의 끝을 알리는 정보를 포함하여 수신 측이 어디까지 데이터를 읽어야 하는지 명확히 한다.
+
 - Link Layer는 node에서 다음 node로 데이터를 전달한다.
   - 이 과정에서 목적지 노드가 아닌 중간 노드에서는 internet layer (host -> host)까지 역캡슐화 해서 host에 대한 정보를 얻는다.
   - **그 후 다시 Header를 붙여 IP packet을 만들고, Link Layer에서 Header, Trailer를 추가하여 다음 노드로 라우팅한다.**
-
 - `Header + Ip packet + Trailer` : `Frame`
 
 
