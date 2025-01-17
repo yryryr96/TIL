@@ -116,7 +116,7 @@ Spring Cloud Config Server가 갖는 endpoint는 다음과 같다.
 
 기본적으로 profile을 설정하지 않았다면 profile의 기본 설정값은 `default`이다. `localhost:8888/user-service/default`로 접속하면 github에 저장되어 있는 `user-service.yml` 파일을 읽어올 수 있다.
 
-![image-20250118012206964](C:\Users\jyr49\Desktop\TIL\images\image-20250118012206964.png)
+![image-20250118012206964](../images/image-20250118012206964.png)
 
 
 
