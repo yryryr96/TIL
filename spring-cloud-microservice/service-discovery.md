@@ -96,3 +96,11 @@ eureka:
 - `server.port	` : 0 으로 설정함으로써 랜덤 포트 설정
 - `eureka.client`
   - `service-url.defaultZone` : 작성한 url로 해당 애플리케이션을 서비스로 등록
+
+
+
+### 정리
+
+- Service Discovery는 마이크로서비스들의 IP, Port 정보를 저장하고 관리하는 서비스이다.
+- Spring Cloud Eureka를 사용해서 쉽게 활용할 수 있다.
+- `@EnableEurekaServer`, `@EnableDiscoveryClient` 애노테이션으로 서버, 클라이언트를 명시하고 application.yml에 설정 정보를 입력해서 `서버-클라이언트` 관계를 구축할 수 있다.
