@@ -1,0 +1,32 @@
+ifndef::snippets[]
+:snippets: ../../build/generated-snippets
+endif::[]
+= PRODUCT API 문서
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+[[product-create]]
+=== 상품 등록
+
+==== HTTP Request
+include::{snippets}/product-create/http-request.adoc[]
+include::{snippets}/product-create/request-fields.adoc[]
+
+==== HTTP Response
+include::{snippets}/product-create/http-response.adoc[]
+include::{snippets}/product-create/response-fields.adoc[]
+
+=== 판매 상품 조회
+
+[[get-selling-products]]
+==== HTTP Request
+include::{snippets}/get-selling-products/http-request.adoc[]
+
+==== HTTP Response
+include::{snippets}/get-selling-products/http-response.adoc[]
+include::{snippets}/get-selling-products/response-fields.adoc[]
+
