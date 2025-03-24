@@ -67,7 +67,7 @@ public repository는 무료, private repository는 시간에 따라 요금이 �
 
 repository의 Actions 탭에서 작성 가능하다.
 
-<img src="../images/image-20241119040259288.png" alt="image-20241119040259288"  align="left"/>
+<img src="../images/image-20241119040259288.png" alt="image-20241119040259288"/>
 
 
 
