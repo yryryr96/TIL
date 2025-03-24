@@ -16,7 +16,7 @@ server2
 docker-compose.yml
 ```
 
-하나의 repository 안에서 nginx 설정 파일, `server1`, `server2` 스프링부트 애플리케이션을 모두 관리했다. 이 repisoty를 ec2 환경에 `git clone`하고 repository 폴더에서 `docker-compose up --build -d` 명령어로 docker-compose를 실행시켜서 배포했다.
+하나의 repository 안에서 nginx 설정 파일, `server1`, `server2` 스프링부트 애플리케이션을 모두 관리했다. 이 repository를 ec2 환경에 `git clone`하고 repository 폴더에서 `docker-compose up --build -d` 명령어로 docker-compose를 실행시켜서 배포했다.
 
 
 
