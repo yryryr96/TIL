@@ -240,7 +240,7 @@ jobs:
 
 위 workflow yml 파일에서 `${{secrets.***}}` 형태로 작성된 값들은 레포지토리의 `Settings` - `Secrets and variables` - `Actions` 에서 정의하고 사용할 수 있다. workflow yml 파일은 레포지토리의 `./github/workflows` 에 공개되기 때문에 외부로 유출되면 안되는 민감한 정보는 여기에 작성하고 사용하자.
 
-<img src="../images/image-20241119043803059.png" alt="image-20241119043803059"  align="left"/>
+<img src="../images/image-20241119043803059.png" alt="image-20241119043803059" />
 
 
 
